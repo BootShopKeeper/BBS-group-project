@@ -1,0 +1,61 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script>
+  function shoeNext(){
+
+  }
+</script>
+<div class="card">
+  <div class="card-body">
+    平均数大于那个的帖子  再加一个平均数大于那个的用户
+    <!-- <h5>这是板块模板，对不同的用户有不同的操作空间，如排序，搜索结果返回等</h5> -->
+    <h5>{{module.b_name}}</h5>
+  </div>
+  <div class="card-body pt-0">
+    <form method="POST" style="margin:0;">
+       <div class="row" style="text-align:center">
+        <div class="col-7">
+        </div>
+        <div class="col-2">
+          <a class="mylight btn  btn-light m-0" href="#">
+               <i class="fa fa-fire-alt" color="#ec7777"></i>&nbsp;Hot</a>
+        </div>
+        <div class="col-3">
+          <input type="text" value="" class="form-control align-center m-0" placeholder="Search User..." style="width:90%">
+        </div>
+      </div>
+    </form>
+    <div class="table-responsive">
+      <table class="table">
+        <thead class=" text-primary">
+          <th>帖子名称 </th>
+          <th> 发帖者</th>
+          <th> 回帖数 </th>
+          <th>点击数 </th>
+          <th>时间 </th> <th clss="text-right">
+          操作
+          </th>
+        </thead>
+        <tbody>
+          {% for post in module.post %}
+          <tr>
+            <td> {{ post.p_title|safe}} </td>
+            <td> {{post.p_name}} </td>
+            <td> {{post.p_replycnt }}</td>
+            <td> {{post.p_clickcnt}}</td>
+            <td> {{post['p_time']}} </td>
+            <td clss="text-right">
+              <i><a>删除</a></i>|<i><a>修改</a></i>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+</div
+<p class="text-right" onclick="ShowNext()">
+  <a>Next Page</a>
+  </p>
+{% endblock %}

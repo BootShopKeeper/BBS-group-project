@@ -1,0 +1,116 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script>
+  let current = $('#sidebar-board')
+  let son = current.children('a')
+  current.addClass("active")
+  son.css('color', '#ef8157')
+  son.css('opacity', 1)
+  son.children('i').css('color', '#ef8157')
+  son.children('i').css('opacity', 1)
+</script>
+
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="m-0">全站最热</h5>
+        <div class="card-body pb-0">
+          <ul class="list-group list-group-flush p-0">
+            <li class="list-group-item p-0">
+          <div>
+            <table class="table">
+              <thead class=" text-muted">
+                <th>帖子名 </th>
+                <th> 版面</th>
+                <th><i class="fab fa-hotjar" color="#ff6767"></i> 回帖数 </th>
+                <th>点击数 </th>
+                <th class="text-right">时间 </th>
+              </thead>
+              <tbody>
+                {% for post in home.post1 %}
+                <tr>
+                  <td><a href="/post/{{post.p_id}}"  class="text-center description"><b>{{post.p_title|safe}}</b></a></td>
+                  <td>  {{post.p_board}} </td>
+                  <td>  {{post.p_replycnt }}</td>
+                  <td>  {{post.p_clickcnt}}</td>
+                  <td class="text-right"> {{post.p_time}} </td>
+                </tr>
+                 {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          </li>
+          <li class="list-group-item p-0 pt-3">
+
+          <div>
+            <table class="table">
+              <thead class=" text-muted">
+                <th>帖子名 </th>
+                <th> 版面</th>
+                <th>回帖数 </th>
+                <th><i class="fab fa-hotjar" color="#ff6767"></i> 点击数 </th>
+                <th class="text-right">时间 </th>
+              </thead>
+              <tbody>
+                {% for post in home.post2 %}
+                <tr>
+                  <td><a href="/post/{{post.p_id}}"  class="text-center description"><b>{{post.p_title|safe}}</b></a></td>
+                  <td>  {{post.p_board}} </td>
+                  <td>  {{post.p_replycnt }}</td>
+                  <td>  {{post.p_clickcnt}}</td>
+                  <td class="text-right"> {{post.p_time}} </td>
+                </tr>
+                 {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+
+
+<div class="row">
+  {%for v in board%}
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="m-0">{{v.b_name}}版</h5>
+        <div class="card-body pb-0">
+          <ul class="list-group list-group-flush p-0">
+            <li class="list-group-item p-0">
+              <ul class="p-0 m-0 " class="list-group list-group-flush p-0">
+                {%for p in v.b_post%}
+                <li class="p-0 list-group-item description">
+                  <span class="fa-li">
+                    <i class="fas fa-star-of-life" color="#d1d8d9">
+                    </i>
+                  </span>
+                  <a class="mya" color="#51cbce"><b>热帖：</b></a> <a href="/post/{{p.p_id}}" class="text-center description"><b>{{p.p_title}}</b></a>
+                    <br />
+                    <a class="mya" color="#51cbce"><b>回复者：</b></a>
+                    {% for r in p.p_reply%}
+                    &nbsp; <b>{{r}}</b>
+                    {%endfor%}
+                </li>
+                {%endfor%}
+              </ul>
+            </li>
+          </ul>
+          <br />
+          <a href="/board/{{v.b_url}}">More...</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+
+
+
+</div>
+{% endblock %}

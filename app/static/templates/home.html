@@ -1,0 +1,99 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script>
+  let current = $('#sidebar-board')
+  let son = current.children('a')
+  current.addClass("active")
+  son.css('color', '#ef8157')
+  son.css('opacity', 1)
+  son.children('i').css('color', '#ef8157')
+  son.children('i').css('opacity', 1)
+</script>
+
+
+<div class="row">
+  <div class="col-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="m-0">全站最热(那20个排名最高)</h5>
+        <div class="card-body pb-0">
+          <ul class="list-group list-group-flush p-0">
+            <li class="list-group-item p-0">
+              <ul class="p-0 m-2">
+                {%for p in home.b_post1%}
+                <li class="p-0">
+                    <a href="/post/{{p.p_id}}" class="text-center description">{{p.p_title}}</a>
+                </li>
+                {%endfor%}
+              </ul>
+            </li>
+            <li class="list-group-item p-0">
+              <ul class="p-0 m-2">
+                {%for p in home.b_post2%}
+                <li class="p-0">
+                    <a href="/post/{{p.p_id}}" class="text-center description">{{p.p_title}}</a>
+                </li>
+                {%endfor%}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+
+
+<div class="row">
+  各站热度最高的帖子，以及回复者的名字们
+  {%for v in board%}
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="m-0">{{v.b_name}}</h5>
+        <div class="card-body pb-0">
+          <ul class="list-group list-group-flush p-0">
+            <li class="list-group-item p-0">
+              <ul class="p-0 m-2">
+                {%for p in v.b_post1%}
+                <li class="p-0">
+                  <span class="fa-li">
+                    <i class="fas fa-star-of-life" color="#d5f2f7">
+                    </i>
+                  </span>
+                    <a href="/post/{{p.p_id}}" class="text-center description">{{p.p_title}}</a>
+                </li>
+                {%endfor%}
+              </ul>
+            </li>
+            <li class="list-group-item p-0">
+              <ul class="p-0 m-2">
+                {%for p in v.b_post2%}
+                <li class="p-0">
+                  <span class="fa-li">
+                    <i class="fas fa-star-of-life" color="#d5f2f7">
+                    </i>
+                  </span>
+                    <a href="/post/{{p.p_id}}" class="text-center description">{{p.p_title}}</a>
+                </li>
+                {%endfor%}
+              </ul>
+            </li>
+          </ul>
+          <br />
+          <a href="/board/{{v.p_url}}">More...</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {%endfor%}
+  <!-- <div class ="col-4">
+
+  </div>
+  <div class="col-4">
+
+  </div> -->
+
+
+</div>
+{% endblock %}

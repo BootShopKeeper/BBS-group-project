@@ -1,0 +1,215 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+
+<div class="card">
+  <div class="card-body">
+    <h4 style="margin: 5px">{{post.p_title}}</h4>
+    <div class ="card-body">
+      <p class="description">
+        作者：{{post.usrname}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp 发帖时间：{{post.p_time}}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp 评论：{{post.p_replycnt}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp
+        点击: {{post.p_clickcnt}}</p>
+      <p>
+        {{post.p_content|safe}}
+        </p>
+          <p>
+            <i href="#" class="fa fa-heart heart" id="heart" style="color:grey; text-color:grey"></i> &nbsp;<a id="heartcnt">{{post.thumbupcnt}}</a>
+        </p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5>回复</h5>
+      <div>
+
+   <div class="card-body">
+     <ul class="list-group list-group-flush">
+       {%for reply in post.p_reply%}
+       <li class="list-group-item p-1">
+         <div clss="container p-t-0">
+           <div class="row align-items-start mb-1">
+               <div class="col text-muted">
+                 {{reply.r_name}}&nbsp;&nbsp;:
+               </div>
+               <div class="col">
+               </div>
+               <div class="col text-right text-muted">
+               {{reply.r_time}}
+              </div>
+           </div>
+             <p class="mb-0" style="color:rgb(46, 43, 45)">
+               {{reply.r_content}}
+               </p>
+         </li>
+          {% endfor %}
+       </ul>
+     </div>
+
+        </div>
+      </div>
+    </div>
+
+
+
+  <!-- <div class="card">
+      <div class="card-body">
+          <h5>回复</h5>
+        <div class="table-responsive">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+              层数
+              </th>
+              <th>
+              回复者
+              </th>
+              <th>
+                内容
+              </th>
+              <th class="text-right">
+              时间
+              </th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Dakota Rice
+                </td>
+                <td>
+                  Niger
+                </td>
+                <td>
+                  Oud-Turnhout
+                </td>
+                <td class="text-right">
+                  $36,738
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Minerva Hooper
+                </td>
+                <td>
+                  Curaçao
+                </td>
+                <td>
+                  Sinaai-Waas
+                </td>
+                <td class="text-right">
+                  $23,789
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Sage Rodriguez
+                </td>
+                <td>
+                  Netherlands
+                </td>
+                <td>
+                  Baileux
+                </td>
+                <td class="text-right">
+                  $56,142
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Philip Chaney
+                </td>
+                <td>
+                  Korea, South
+                </td>
+                <td>
+                  Overland Park
+                </td>
+                <td class="text-right">
+                  $38,735
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Doris Greene
+                </td>
+                <td>
+                  Malawi
+                </td>
+                <td>
+                  Feldkirchen in Kärnten
+                </td>
+                <td class="text-right">
+                  $63,542
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Mason Porter
+                </td>
+                <td>
+                  Chile
+                </td>
+                <td>
+                  Gloucester
+                </td>
+                <td class="text-right">
+                  $78,615
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Jon Porter
+                </td>
+                <td>
+                  Portugal
+                </td>
+                <td>
+                  Gloucester
+                </td>
+                <td class="text-right">
+                  $98,615
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        </div>
+    </div>
+
+ -->
+
+
+
+
+    <div class="card-body">
+      <form method="post">
+        {{ form.csrf_token }}
+          <h5>评论</h5>
+          {{form.body}}
+          <div class="wrap form-group">
+            <div class="p-t-15">
+                <button class="btn btn-primary btn-round" type="submit">提交</button>
+            </div>
+      </form>
+      {{ ckeditor.load() }} {{ ckeditor.config(name='body') }}
+      </div>
+      <script>
+        window.clickheart = 0
+        let heartcolor = ['grey', 'red']
+        $('#heart').click(function(){
+          val = Number($('#heartcnt').text())
+          if(clickheart==0){
+            clickheart=1
+            $('#heartcnt').text(val+1)
+          }
+          else {
+            clickheart = 0
+            $('#heartcnt').text(val-1)
+          }
+          $(this).css('color', heartcolor[clickheart])
+        })
+      </script>
+
+  {% endblock %}

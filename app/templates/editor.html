@@ -1,0 +1,78 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script src="{{ url_for('static', filename='vendor/ckeditor/ckeditor.js') }}"></script>
+<script>
+  let current = $('#sidebar-editor')
+  let son = current.children('a')
+  current.addClass("active")
+  son.css('color', '#ef8157')
+  son.css('opacity', 1)
+  son.children('i').css('color', '#ef8157')
+  son.children('i').css('opacity', 1)
+
+  $(document).ready(function(){
+    $.get("/delete/editor/1", function(data, status) {　
+      console.log(data)
+      if(data=="1"){
+        $.notify({
+          message: '您有水贴嫌疑，请稍后再发'
+        }, {
+          type: 'warning'
+        });
+        setTimeout(function() {
+          window.location.href="/home"
+        }, 2500);
+      }
+    });
+  })
+
+</script>
+
+<div class="card">
+  <div class="card-header">
+  </div>
+<div class = "card-body">
+  <form method="post">
+    {{ form.csrf_token }}
+    <div class="card-body">
+      <div class="row row-space">
+          <div class="col-md-3">
+              <div class="">
+              <label class="label">标题</label><br />
+                <input class="form-control" type="text" name="p_title" >
+
+              </div>
+          </div>
+          <div class="col-md-3">
+            <label class="label" >版面</label>
+            <div class="rs-select2 js-select-simple select&#45;&#45;no-search">
+                <select class="form-control" name="p_board">
+                    <option value="entertainment">Entertainment</option>
+                    <option value="studies">Studies</option>
+                    <option value="secret-garden">Secret Garden</option>
+                </select>
+                <div class="select-dropdown"></div>
+            </div>
+          </div>
+      </div>
+
+    <div class="">
+      <label class="label">内容</label>
+      {{form.p_content}}
+      </div>
+      <div class="wrap form-group">
+        <div class="p-t-15">
+            <button class="btn btn-primary btn-round" type="submit">发表新帖</button>
+        </div>
+
+  </form>
+  {{ ckeditor.load() }} {{ ckeditor.config(name='p_content', language="zh-cn") }}
+  </div>
+
+    </div>
+  </div>
+
+
+</div>
+<script>
+</script>
+{% endblock %}

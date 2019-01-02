@@ -1,0 +1,101 @@
+{
+  "_from": "bootstrap-table",
+  "_id": "bootstrap-table@1.13.0",
+  "_inBundle": false,
+  "_integrity": "sha512-DZAZq7QrtbjBNQedfRRjvjIfB0BDLTqeBXxjCrQjiVqZ/Q7Pm746PHgAd95s4qvSrKuMDABAyE7LUd51dOlkgg==",
+  "_location": "/bootstrap-table",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "bootstrap-table",
+    "name": "bootstrap-table",
+    "escapedName": "bootstrap-table",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/bootstrap-table/-/bootstrap-table-1.13.0.tgz",
+  "_shasum": "084cc4b849bbb51940e40c740943932b70fbc4c4",
+  "_spec": "bootstrap-table",
+  "_where": "D:\\course\\grade three\\db\\proj\\lajiBBS\\app\\static",
+  "author": {
+    "name": "wenzhixin",
+    "email": "wenzhixin2010@gmail.com",
+    "url": "http://wenzhixin.net.cn/"
+  },
+  "bugs": {
+    "url": "https://github.com/wenzhixin/bootstrap-table/issues"
+  },
+  "bundleDependencies": false,
+  "collective": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/bootstrap-table",
+    "logo": "https://opencollective.com/bootstrap-table/logo.txt"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "deprecated": false,
+  "description": "An extended Bootstrap table with radio, checkbox, sort, pagination, and other added features. (supports twitter bootstrap v2 and v3).",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-babili": "^0.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-0": "^6.24.1",
+    "cssmin-cli": "^0.0.5",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "headr": "^0.0.4",
+    "npm-run-all": "^4.1.5",
+    "opencollective": "^1.0.3"
+  },
+  "directories": {
+    "doc": "docs"
+  },
+  "homepage": "http://bootstrap-table.wenzhixin.net.cn",
+  "keywords": [
+    "bootstrap",
+    "table",
+    "radio",
+    "checkbox",
+    "sort",
+    "pagination",
+    "editable"
+  ],
+  "license": "MIT",
+  "main": "./dist/bootstrap-table.js",
+  "name": "bootstrap-table",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wenzhixin/bootstrap-table.git"
+  },
+  "scripts": {
+    "build": "run-s clean *:build",
+    "clean": "rm -rf dist",
+    "css:build": "run-s css:build:*",
+    "css:build:banner": "find dist -name '*.min.css' -exec headr {} -o {} --version --homepage --author --license \\;",
+    "css:build:base": "find src -name '*.css' | sed -e 'p;s/src/dist/' | xargs -n2 cp",
+    "css:build:min": "find dist -name '*.css' | sed -e 'p;s/.css/.min.css/' | xargs -n2 cssmin",
+    "js:build": "run-s js:build:*",
+    "js:build:banner": "find dist -name '*.min.js' -exec headr {} -o {} --version --homepage --author --license \\;",
+    "js:build:base": "babel src -d dist -q",
+    "js:build:concat": "babel src/locale -o dist/bootstrap-table-locale-all.js && NODE_ENV=production babel src/locale -o dist/bootstrap-table-locale-all.min.js",
+    "js:build:min": "NODE_ENV=production babel src -d dist -q && find dist -name '*.js' | sed -e 'p;s/.js/.min.js/' | xargs -n2 mv",
+    "lint": "run-p lint:*",
+    "lint:js": "eslint src/bootstrap-table.js src/extensions/export/bootstrap-table-export.js src/extensions/toolbar/bootstrap-table-toolbar.js",
+    "postinstall": "opencollective postinstall || exit 0"
+  },
+  "types": "./index.d.ts",
+  "version": "1.13.0"
+}

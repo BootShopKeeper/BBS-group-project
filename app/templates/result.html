@@ -1,0 +1,16 @@
+{% extends"layout.html" %} {{ super() }} {% block content %}
+<link rel="stylesheet" href="{{url_for('static',filename='vendor/highlight/styles/vs.css')}}">
+<script src="{{url_for('static',filename='vendor/highlight/highlight.pack.js')}}"></script>
+  <div  class="card">
+    <div class="card-body">
+        <pre lang="xml" ><code class="xml">{{xml1}}</code></pre>
+      </div>
+    </div>
+<script>
+  $(document).ready(function() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+{% endblock %}

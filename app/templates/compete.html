@@ -1,0 +1,122 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script>
+  let current = $('#sidebar-compete')
+  let son = current.children('a')
+  current.addClass("active")
+  son.css('color', '#ef8157')
+  son.css('opacity', 1)
+  son.children('i').css('color', '#ef8157')
+  son.children('i').css('opacity', 1)
+</script>
+{%if not result%}
+<div class="card">
+  <div class="card-body">
+    <form method="POST" style="margin:0;">
+      <div class="row row-space">
+        <div class="col-md-3">
+          <label class="label">版面A</label>
+          <div class="rs-select2 js-select-simple select&#45;&#45;no-search">
+            <select class="form-control" name="board1">
+             <option value="" disabled selected>Board A</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="studies">Studies</option>
+                  <option value="secret-garden">Secret Garden</option>
+              </select>
+            <div class="select-dropdown"></div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="label">版面B</label>
+          <div class="rs-select2 js-select-simple select&#45;&#45;no-search">
+            <select class="form-control" name="board2">
+             <option value="" disabled selected>Board B</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="studies">Studies</option>
+                    <option value="secret-garden">Secret Garden</option>
+                </select>
+            <div class="select-dropdown"></div>
+          </div>
+        </div>
+        <div class="col-2">
+          <br />
+          <button class="mylight btn  btn-light m-0" href="#">
+             <i class="fas fa-check" color="#ec7777"></i>&nbsp;Go!</button>
+        </div>
+      </div>
+</form>
+  </div>
+</div>
+{%else%}
+<div class="card">
+  <div class="card-body">
+    <form method="POST" style="margin:0;">
+      <div class="row row-space">
+        <div class="col-md-3">
+          <label class="label">版面A</label>
+          <div class="rs-select2 js-select-simple select&#45;&#45;no-search">
+            <select class="form-control" name="board1">
+             <option value="" disabled selected>{{result.board1}}</option>
+                  <option value="entertainment">Entertainment</option>
+                  <option value="studies">Studies</option>
+                  <option value="secret-garden">Secret Garden</option>
+              </select>
+            <div class="select-dropdown"></div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <label class="label">版面B</label>
+          <div class="rs-select2 js-select-simple select&#45;&#45;no-search">
+            <select class="form-control" name="board2">
+             <option value="" disabled selected>{{result.board2}}</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="studies">Studies</option>
+                    <option value="secret-garden">Secret Garden</option>
+                </select>
+            <div class="select-dropdown"></div>
+          </div>
+        </div>
+        <div class="col-2">
+          <br />
+          <button class="mylight btn  btn-light m-0" href="#">
+             <i class="fas fa-check" color="#ec7777"></i>&nbsp;Go!</button>
+        </div>
+      </div>
+</form>
+  </div>
+</div>
+<div class="card">
+  <div class="card-body">
+
+
+<div class="table">
+  <table class="table">
+    <thead class=" text-primary">
+      <th>用户名 </th>
+      <th>性别</th>
+      <th>生日 </th>
+      <th>A发帖次数</th>
+      <th>B发帖次数</th>
+      <th class="text-right">
+      等级
+      </th>
+    </thead>
+    <tbody>
+      {% for user in result.userlist %}
+      <tr>
+        <td>  {{ user.usr_name}} </td>
+        <td> {{user.usr_gender}} </td>
+        <td> {{user.usr_birthday}}</td>
+        <td> {{user.b1cnt}}</td>
+        <td> {{user.b2cnt}} </td>
+        <td class="text-right">
+        {{user.usr_level}}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+    </div>
+        </div>
+{%endif%}
+{% endblock %}

@@ -1,0 +1,114 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script src="{{ url_for('static', filename='vendor/ckeditor/ckeditor.js') }}"></script>
+<script>
+  function deleteComment(r_id) {
+    let rId = r_id.toString()
+    console.log(r_id)
+    $.get("/delete/reply/" + rId, function(data, status) {　
+      console.log(data)
+      $.notify({
+        message: 'Deleted Succussfully ;-)'
+      }, {
+        type: 'success'
+      });
+      //window.location.href="home"
+      setTimeout(function() {
+        window.location.reload()
+      }, 2500);
+
+    });
+  }
+window.heartcolor = ['grey', 'red']
+
+  function like(e) {
+    let ele = $(e)
+    let cnt = Number(ele.attr('clicktime'))
+    let neighbor = ele.next()
+    let val = Number(neighbor.text())
+    let rId = String(ele.attr('id'))
+    if (cnt == 1) {
+      $.get("/delete/agree/" + rId, function(data, status) {　
+        console.log(data)
+        ele.css('color', heartcolor[1 - cnt])
+        ele.attr('clicktime', 0)
+        neighbor.text(val-1)
+      });
+    } else {
+      $.get("/add/agree/" + rId, function(data, status) {　
+        console.log(data)
+        ele.css('color', heartcolor[1 - cnt])
+        ele.attr('clicktime', 1)
+        neighbor.text(val+1)
+      });
+
+    }
+    rId = String(ele.attr('id'))
+  }
+</script>
+
+<div class="card">
+  <div class="card-body">
+    <h4 style="margin: 5px">{{post.p_title}}</h4>
+    <div class="card-body">
+      <p class="description">
+        作者：{{post.p_usrid}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp 发帖时间：{{post.p_time}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp 评论：{{post.p_replycnt}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp 点击: {{post.p_clickcnt}}</p>
+      <p>
+        {{post.p_content|safe}}
+      </p>
+    </div>
+  </div>
+
+</div>
+
+    {% block comment %}
+<div class="card">
+  <div class="card-body">
+    <div>
+      <div class="card-body">
+        <h5>回复</h5>
+        <ul class="list-group list-group-flush">
+          {%for reply in post.p_reply%}
+          <li class="list-group-item p-1">
+            <div clss="container p-t-0">
+              <div class="row align-items-start mb-1">
+                <div class="col text-muted">
+                  {{reply.r_layer}}楼：&nbsp;&nbsp; {{reply.r_name}}
+                </div>
+                <div class="col">
+                </div>
+                <div class="col text-right text-muted">
+                  {{reply.r_time}} &nbsp;&nbsp;
+                  <i class="fa fa-heart heart likebutton" id="{{reply.r_id}}" clicktime="0" onclick="like(this)" style="color:grey; text-color:grey"></i> &nbsp;
+                  <a>{{reply.r_agreecnt}}</a> {% if user.usr_role==2 or post.isBoarder == 1 %} &nbsp;&nbsp; <a onclick="deleteComment({{reply.r_id}})"><i class="fas fa-trash-alt" color="#808080" ></i></a> {%endif%}
+                </div>
+              </div>
+              <p class="mb-0" style="color:rgb(46, 43, 45)">
+                {{reply.r_content|safe}}
+              </p>
+          </li>
+          {% endfor %}
+        </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+      {% endblock %}
+
+
+  <div class="card-body">
+    <form method="post">
+      {{ form.csrf_token }}
+      {%block textzone%}
+      <h5>评论</h5>
+      {%endblock %}
+      {{form.r_content}}
+
+      <div class="wrap form-group">
+        <div class="p-t-15">
+          <button class="btn btn-primary btn-round" type="submit">提交</button>
+        </div>
+    </form>
+    {{ ckeditor.load() }} {{ ckeditor.config(name='p_content', language="zh-cn") }}
+    </div>
+
+    {% endblock %}

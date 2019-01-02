@@ -1,0 +1,135 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script type="text/javascript" src="{{url_for('static', filename='vendor/MDB/js/addons/datatables.min.js')}}"></script>
+<script>
+  function showNext() {
+    alert('This is the last page.')
+  }
+  $(document).ready(function () {
+$('#userTable').DataTable({
+  "searching": false,
+   "paging": false
+});
+$('#postTable').DataTable({
+  // "searching": false,
+  //  "paging": false
+});
+
+$('.dataTables_length').addClass('bs-select');
+$('#userTable_info').parent('div').remove()
+$('#postTable_info').remove()
+});
+
+</script>
+<link href="{{url_for('static', filename='vendor/MDB/css/addons/datatables.min.css')}}" rel="stylesheet">
+<div class="row">
+  <div class="col-4">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="description"><b>{{board.b_name}}</b></h5>
+        <div class="row">
+          <div class="col-8">
+            <p>版面编号：{{board.b_id}}</p>
+            <p>版主：&nbsp;{{board.b_master}}</p>
+            <p>平均回复：{{board.b_avereply}}</p >
+            <p>平均点击：{{board.b_aveclick}}</p >
+            <p>总帖子：{{board.b_postcnt}}</p>
+            </div>
+            <div class="col-2">
+              <a class="mylight btn  btn-light m-0" href="#">
+                 <i class="fa fa-fire-alt" color="#ec7777"></i>&nbsp;Hot</a>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-body">
+        <h6>活跃用户</h6>
+        <div class="table-flexible">
+          <table class="table" id="userTable">
+            <thead class=" text-primary">
+              <th>用户名</th>
+              <th>年龄</th>
+              <th onclick="sortUserPost(this)">发帖
+                <!-- <i class="fas fa-sort"></i> -->
+              </th>
+              <th class="text-right" onclick="sortUserReply">回帖
+                <!-- <i class="fas fa-sort"></i> -->
+              </th>
+            </thead>
+            <tbody>
+              {% for u in board.user %}
+              <tr>
+                <td>
+                  {{u.usr_name}} {%if u.usr_gender=='Female'%}
+                  <i class="fas fa-venus" color="#fad2d2"></i> {%else%}
+                  <i class="fas fa-mars" color="#c0e3ed"></i> {%endif%}
+                </td>
+                <td>
+                  {{u.usr_age}}
+                  </td>
+                <td> {{u.postcnt}}</td>
+                <td class="text-right"> {{u.replycnt}} </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-8">
+    <div class="card">
+      <div class="card-body">
+        <!-- <p> 所有的帖子  </p> -->
+        <div class="card-body pt-0">
+          <!-- <form method="POST" style="margin:0;">
+            <div class="row">
+              <div class="col-7">
+                <h6 class="m-2">版面帖子</h6>
+              </div>
+              <div class="col-2">
+                <a class="mylight btn  btn-light m-0" href="#">
+                   <i class="fa fa-fire-alt" color="#ec7777"></i>&nbsp;Hot</a>
+              </div>
+              <div class="col-3">
+                <input type="text" value="" class="form-control align-center m-0" placeholder="Search User..." style="width:90%">
+              </div>
+            </div>
+          </form> -->
+          <div class="table">
+            <table class="table" id="postTable">
+              <thead class=" text-primary">
+                <th>帖子名称 </th>
+                <th> 发帖者</th>
+                <th onclick="sortPostReply"> 回帖数
+                  <!-- <i class="fas fa-sort"></i>  -->
+                </th>
+                <th onclick="sortPostClick">点击数
+                  <!-- <i class="fas fa-sort"></i> -->
+                </th>
+                <th class="text-right">时间
+                  <!-- <i class="fas fa-sort"></i>  -->
+                </th>
+              </thead>
+              <tbody>
+                {% for post in board.post %}
+                <tr>
+                  <td> <a class="description" href="../post/{{post.p_id}}"><b>{{ post.p_title|safe}}</b></a> </td>
+                  <td> {{post.p_usrid}} </td>
+                  <td> {{post.p_replycnt }}</td>
+                  <td> {{post.p_clickcnt}}</td>
+                  <td class="text-right"> {{post.p_time}} </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <!-- <a class="text-right mr-5 mb-3" onclick="showNext()">Next Page</a> -->
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

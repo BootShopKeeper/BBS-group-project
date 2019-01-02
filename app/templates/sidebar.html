@@ -1,0 +1,66 @@
+<div class="sidebar" data-color="white" data-active-color="blue">
+  <!--
+    Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+-->
+  <div class="logo">
+    <a href="/home" class="simple-text logo-mini">
+      <div class="logo-image-small">
+        <img src="{{ url_for('static', filename='images/logo.png')}}">
+      </div>
+    </a>
+    {% if user%}
+    <a href="#" class="simple-text logo-normal" style="color:grey">
+      {{user.usr_name}}
+    </a> {% else %}
+    <a href="#" class="simple-text logo-normal">
+       Guest
+     </a> {% endif %}
+
+  </div>
+  <div class="sidebar-wrapper">
+    <ul class="nav">
+      <li id = 'sidebar-board'>
+        <a href="/home">
+          <i class="nc-icon nc-tile-56"></i>
+          <p>版面</p>
+        </a>
+      </li>
+      <li id = 'sidebar-profile'>
+        <a href="/profile">
+          <i class="nc-icon nc-single-02"></i>
+          <p>资料</p>
+        </a>
+      </li>
+      <li id = 'sidebar-editor'>
+        <a href="/editor">
+          <i class="nc-icon nc-bulb-63"></i>
+          <p>发帖</p>
+        </a>
+      </li>
+      <li id='sidebar-compete'>
+        <a href="/compete">
+          <i class="nc-icon nc-controller-modern"></i>
+          <p>PK赛</p>
+        </a>
+        </li>
+      {% if user and user.usr_role!=0 %}
+      <li id = 'sidebar-manage'>
+        {%if user and user.usr_role == 1%}
+        <a href="/boarder">
+          {%else%}
+          <a href = "/config">
+          {%endif%}
+          <i class="nc-icon nc-atom"></i>
+          <p>管理</p>
+        </a>
+      </li>
+      {% else %} {% endif %}
+      <li class="active-pro">
+        <a href="/signout">
+          <i class="nc-icon nc-spaceship"></i>
+          <p>登出</p>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

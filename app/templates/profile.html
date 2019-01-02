@@ -1,0 +1,136 @@
+{% extends "layout.html" %} {{ super() }} {% block content %}
+<script>
+  let current = $('#sidebar-profile')
+  let son = current.children('a')
+  current.addClass("active")
+  son.css('color', '#ef8157')
+  son.css('opacity', 1)
+  son.children('i').css('color', '#ef8157')
+  son.children('i').css('opacity', 1)
+</script>
+<div class="content">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="card card-user">
+        <div class="image" style="background-color:#e8e8e8">
+          <!-- <img src="../assets/img/damir-bosnjak.jpg" alt="..."> -->
+        </div>
+        <div class="card-body">
+          <div class="author">
+            <a href="xml/{{user.usr_name}}" target='_blank'>
+                    {% if user.usr_gender == 'Female' %}
+                      <img class="avatar border-gray" src="{{ url_for('static', filename='images/Female.png')}}" alt="...">
+                    {% else %}
+                      <img class="avatar border-gray" src="{{ url_for('static', filename='images/Male.png')}}" alt="...">
+                    {% endif %}
+                    <h5 class="title">{{user.usr_name}}</h5>
+                  </a>
+            <p class="description">
+              {% if user.usr_gender == 'Female' %} 女孩子 {% else %} 男孩子 {% endif %} &nbsp;{{user.usr_age}}岁({{user.usr_birthday}})
+            </p>
+          </div>
+          <p class="description">
+            入驻：{{user.usr_regdate}}
+          </p>
+          <p class="description">
+            邮箱：<a href="mailto:{{user.usr_email}}">{{user.usr_email}}</a>
+          </p>
+        </div>
+        <div class="card-footer">
+          <hr>
+          <div class="button-container">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-6 ml-auto">
+                <h5>{{user.usr_level}}
+                        <br>
+                        <small>等级</small>
+                      </h5>
+              </div>
+              <div class="col-lg-4 col-md-6 col-6 ml-auto mr-auto">
+                <h5>{{user.usr_postcnt}}
+                        <br>
+                        <small>发帖</small>
+                      </h5>
+              </div>
+              <div class="col-lg-3 mr-auto">
+                <h5>{{user.usr_replycnt}}
+                        <br>
+                        <small>回帖</small>
+                      </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header">
+          <h4 class="card-title">签名档</h4>
+        </div>
+        <div class="card-body">
+          <p class="description">
+            我最喜欢数据库了，数据库可真有意思，做前端一点儿都不累<i class="fas fa-smile"></i>。
+            </p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">发帖纪录</h5>
+          <div class="table-wrap">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>帖子名称 </th>
+                <th> 版面</th>
+                <th> 回帖数 </th>
+                <th>点击数 </th>
+                <th class="text-right">时间 </th>
+              </thead>
+              <tbody>
+                {% for post in user.post %}
+                <tr>
+                  <td><a href="/post/{{post.p_id}}"  class="text-center description"><b>{{post.p_title|safe}}</b></a></td>
+                  <td>  {{post.p_board}} </td>
+                  <td>  {{post.p_replycnt }}</td>
+                  <td>  {{post.p_clickcnt}}</td>
+                  <td class="text-right"> {{post.p_time}} </td>
+                </tr>
+                 {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">回复纪录</h5>
+          <div class="table-wrap">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>帖子名称 </th>
+                <th> 版面</th>
+                <th>发帖者</th>
+                <th> 赞数 </th>
+                <th class="text-right">时间 </th>
+              </thead>
+              <tbody>
+                {% for post in user.reply %}
+                <tr>
+                  <td><a  class="text-center description" href="/post/{{post.p_id}}"><b>{{ post.r_title|safe}}</b></a> </td>
+                  <td>  {{post.r_board}} </td>
+                  <td>  {{post.r_name}} </td>
+                  <td>  {{post.r_agreecnt }}</td>
+                  <td class="text-right"> {{post.r_time}} </td>
+                </tr>
+                 {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+</div>
+</div>
+</div>
+{% endblock %}
